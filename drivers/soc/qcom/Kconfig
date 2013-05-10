@@ -954,3 +954,9 @@ config BECKHAM_DTB
 	help
 	  Only include Beckham specific DTBs to limit the number that
 	  get built during kernel compilation.
+
+config MMI_UNIT_INFO
+	default n
+	bool "Motorola Mobility Unit Info"
+	help
+	Provide mechanism to expose unit information to other cpu via smem.
