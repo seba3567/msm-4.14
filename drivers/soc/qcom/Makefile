@@ -87,6 +87,7 @@ ifdef CONFIG_MSM_RPM_SMD
 	obj-$(CONFIG_QTI_RPM_STATS_LOG) += rpm_master_stat.o
 endif
 obj-$(CONFIG_QMP_DEBUGFS_CLIENT) += qmp-debugfs-client.o
+
 obj-$(CONFIG_MSM_PERFORMANCE) += msm_performance.o
 ifdef CONFIG_DEBUG_FS
 obj-$(CONFIG_MSM_RPM_SMD)   +=  rpm-smd-debug.o
@@ -98,3 +99,5 @@ obj-$(CONFIG_QCOM_CX_IPEAK) += cx_ipeak.o
 obj-$(CONFIG_QCOM_AOP_DDR_MESSAGING) += aop_ddr_msgs.o
 obj-$(CONFIG_MSM_HAB) += hab/
 obj-$(CONFIG_QCOM_HYP_CORE_CTL) += hyp_core_ctl.o
+
+obj-$(CONFIG_BOOTINFO) += bootinfo.o
