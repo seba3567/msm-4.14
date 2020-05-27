@@ -1,242 +1,355 @@
-# SPDX-License-Identifier: GPL-2.0
-dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc.dtb
-dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-db820c.dtb
-dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk01.dtb
-dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-mtp.dtb
-dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-bullhead-rev-101.dtb
-dtb-$(CONFIG_ARCH_QCOM)	+= msm8994-angler-rev-101.dtb
-dtb-$(CONFIG_ARCH_QCOM)	+= msm8996-mtp.dtb
+# Only include Motorola DTBs
+ifeq ($(CONFIG_MMI_DEVICE_DTBS),y)
+# Add 1k of padding to the DTBs to allow for environment variables
+# to be runtime added by the bootloader (i.e. /chosen properties)
+DTC_FLAGS += -p 1024
+
+# Motorola Device Trees
+dtb-$(CONFIG_ARCH_MSM8998) += msm8998-saratoga-p1.dtb \
+	msm8998-saratoga-p1a.dtb \
+	msm8998-nash-evt1-v2.dtb \
+	msm8998-nash-evt1-v1.dtb \
+	msm8998-nash-dvt1.dtb \
+	msm8998-nash-dvt1b.dtb \
+	msm8998-nash-dvt2.dtb \
+	msm8998-nash-dvt2b.dtb \
+	msm8998-loki-evt1.dtb \
+	msm8998-messi-evt1.dtb
+
+ifeq ($(CONFIG_BECKHAM_DTB),y)
+dtb-$(CONFIG_ARCH_SDM660) += sdm660-beckham-evt1.dtb \
+	sdm660-beckham-evt2.dtb \
+	sdm636-beckham-evt1.dtb \
+	sdm636-beckham-dvt1a.dtb \
+	sdm636-beckham-dvt1b.dtb \
+	sdm636-beckham-dvt2a.dtb \
+	sdm636-beckham-dvt2b.dtb \
+	sdm636-beckham-dvt3.dtb \
+	sdm636-beckham-pvt.dtb
+endif
+
+ifeq ($(CONFIG_PAYTON_DTB),y)
+dtb-$(CONFIG_ARCH_SDM630) += sdm630-payton-p0a.dtb \
+	sdm630-payton-p1a.dtb \
+	sdm630-payton-p2a.dtb \
+	sdm630-payton-p2b.dtb
+endif
+
+ifeq ($(CONFIG_EVERT_DTB),y)
+dtb-$(CONFIG_ARCH_SDM630) += sdm630-evert-evt1.dtb \
+	sdm630-evert-dvt1a.dtb \
+	sdm630-evert-dvt1b.dtb \
+	sdm630-evert-dvt2.dtb \
+	sdm630-evert-pvt1.dtb
+endif
+
+ifeq ($(CONFIG_HEART_DTB),y)
+dtb-$(CONFIG_ARCH_SDM630) += sdm630-heart-evb.dtb
+dtb-$(CONFIG_ARCH_SDM636) += sdm636-heart-evb.dtb
+dtb-$(CONFIG_ARCH_SDM636) += sdm636-heart-evt1.dtb
+dtb-$(CONFIG_ARCH_SDM636) += sdm636-heart-evt2.dtb
+endif #CONFIG_HEART_DTB
+
+ifeq ($(CONFIG_LAKE_DTB),y)
+ifeq ($(CONFIG_BUILD_ARM64_DT_OVERLAY),y)
+dtbo-$(CONFIG_ARCH_SDM636) += \
+	sdm636-lake-evt1-overlay.dtbo \
+	sdm636-lake-evt2-overlay.dtbo \
+	sdm636-lake-na-evt2-overlay.dtbo
+
+sdm636-lake-evt1-overlay.dtbo-base :=  sdm636-lake-base.dtb
+sdm636-lake-evt2-overlay.dtbo-base :=  sdm636-lake-base.dtb
+sdm636-lake-na-evt2-overlay.dtbo-base :=  sdm636-lake-base.dtb
+else
+dtb-$(CONFIG_ARCH_SDM636) += sdm636-lake-evt1.dtb
+dtb-$(CONFIG_ARCH_SDM636) += sdm636-lake-evt2.dtb
+dtb-$(CONFIG_ARCH_SDM636) += sdm636-lake-na-evt2.dtb
+endif
+endif #CONFIG_LAKE_DTB
+
+ifeq ($(CONFIG_CHEF_DTB),y)
+dtb-$(CONFIG_ARCH_SDM636) += sdm636-chef-evt.dtb
+endif
+
+ifeq ($(CONFIG_FLAY_DTB),y)
+dtb-$(CONFIG_ARCH_SDM636) += sdm636-flay-evt.dtb
+endif
+
+ifeq ($(CONFIG_PAYTON_DTB),y)
+dtb-$(CONFIG_ARCH_SDM660) += sdm660-paytonpro-p0a.dtb
+endif
+
+else
+# Only include QC architecture specific DTBs
+dtb-$(CONFIG_ARCH_MSM8996) += msm8996-v2-pmi8994-cdp.dtb \
+	msm8996-v2-pmi8994-mtp.dtb \
+	msm8996-v2-pmi8994-pmk8001-cdp.dtb \
+	msm8996-v2-pmi8994-pmk8001-mtp.dtb \
+	msm8996-v2-pmi8994-pm8004-cdp.dtb \
+	msm8996-v2-pmi8994-pm8004-mtp.dtb \
+	msm8996-v2-pmi8994-pm8004-pmk8001-cdp.dtb \
+	msm8996-v2-pmi8994-pm8004-pmk8001-mtp.dtb \
+	msm8996-v2-fluid.dtb \
+	msm8996-v2-liquid.dtb \
+	msm8996-v2-dtp.dtb \
+	msm8996-v3-auto-cdp.dtb \
+	msm8996-v3-auto-adp.dtb \
+	msm8996-v3-pmi8994-cdp.dtb \
+	msm8996-v3-pmi8994-mtp.dtb \
+	msm8996-v3-pmi8994-pmk8001-cdp.dtb \
+	msm8996-v3-pmi8994-pmk8001-mtp.dtb \
+	msm8996-v3-pmi8994-pm8004-cdp.dtb \
+	msm8996-v3-pmi8994-pm8004-mtp.dtb \
+	msm8996-v3-pmi8994-pm8004-pmk8001-cdp.dtb \
+	msm8996-v3-pmi8994-pm8004-pmk8001-mtp.dtb \
+	msm8996-v3-pmi8996-cdp.dtb \
+	msm8996-v3-pmi8996-mtp.dtb \
+	msm8996-v3-pmi8996-pmk8001-cdp.dtb \
+	msm8996-v3-pmi8996-pmk8001-mtp.dtb \
+	msm8996-v3-fluid.dtb \
+	msm8996-v3-liquid.dtb \
+	msm8996-v3-dtp.dtb \
+	msm8996-v3-pm8004-mmxf-adp.dtb \
+	msm8996-v3-pm8004-agave-adp.dtb \
+	msm8996-v3-pm8004-agave-adp-lite.dtb \
+	msm8996pro-auto-adp.dtb \
+	msm8996pro-auto-adp-lite.dtb \
+	msm8996pro-auto-cdp.dtb \
+	msm8996pro-auto-cv2x.dtb \
+	msm8996pro-pmi8994-cdp.dtb \
+	msm8996pro-pmi8994-mtp.dtb \
+	msm8996pro-pmi8994-pmk8001-cdp.dtb \
+	msm8996pro-pmi8994-pmk8001-mtp.dtb \
+	msm8996pro-pmi8994-pm8004-cdp.dtb \
+	msm8996pro-pmi8994-pm8004-mtp.dtb \
+	msm8996pro-pmi8994-pm8004-pmk8001-cdp.dtb \
+	msm8996pro-pmi8994-pm8004-pmk8001-mtp.dtb \
+	msm8996pro-pmi8996-cdp.dtb \
+	msm8996pro-pmi8996-mtp.dtb \
+	msm8996pro-pmi8996-pmk8001-cdp.dtb \
+	msm8996pro-pmi8996-pmk8001-mtp.dtb \
+	msm8996pro-v1.1-auto-cdp.dtb \
+	msm8996pro-v1.1-pmi8994-cdp.dtb \
+	msm8996pro-v1.1-pmi8994-mtp.dtb \
+	msm8996pro-v1.1-pmi8994-pmk8001-cdp.dtb \
+	msm8996pro-v1.1-pmi8994-pmk8001-mtp.dtb \
+	msm8996pro-v1.1-pmi8994-pm8004-cdp.dtb \
+	msm8996pro-v1.1-pmi8994-pm8004-mtp.dtb \
+	msm8996pro-v1.1-pmi8994-pm8004-pmk8001-cdp.dtb \
+	msm8996pro-v1.1-pmi8994-pm8004-pmk8001-mtp.dtb \
+	msm8996pro-v1.1-pmi8996-cdp.dtb \
+	msm8996pro-v1.1-pmi8996-mtp.dtb \
+	msm8996pro-v1.1-pmi8996-pmk8001-cdp.dtb \
+	msm8996pro-v1.1-pmi8996-pmk8001-mtp.dtb \
+	apq8096pro-auto-cdp.dtb \
+	apq8096pro-v1.1-auto-adp.dtb \
+	apq8096pro-v1.1-auto-adp-lite.dtb \
+	apq8096pro-liquid.dtb \
+	apq8096pro-v1.1-auto-cdp.dtb \
+	msm8996-v3.0-pmi8994-cdp.dtb \
+	msm8996-v3.0-pmi8994-mtp.dtb \
+	msm8996-v3.0-pmi8994-pm8004-cdp.dtb \
+	msm8996-v3.0-pmi8994-pm8004-mtp.dtb \
+	msm8996-v3.0-pmi8994-pm8004-pmk8001-cdp.dtb \
+	msm8996-v3.0-pmi8994-pmk8001-cdp.dtb \
+	msm8996-v3.0-pmi8996-cdp.dtb \
+	msm8996-v3.0-pmi8996-mtp.dtb \
+	msm8996-v3.0-fluid.dtb \
+	msm8996-v3.0-liquid.dtb \
+	msm8996-v3.0-dtp.dtb \
+	apq8096-v2-pmi8994-cdp.dtb \
+	apq8096-v2-pmi8994-mtp.dtb \
+	apq8096-v2-pmi8994-pmk8001-cdp.dtb \
+	apq8096-v2-pmi8994-pm8004-cdp.dtb \
+	apq8096-v2-pmi8994-pm8004-pmk8001-cdp.dtb \
+	apq8096-v2-liquid.dtb \
+	apq8096-v2-dragonboard.dtb \
+	apq8096-v2-auto-dragonboard.dtb \
+	apq8096-v3-pmi8994-cdp.dtb \
+	apq8096-v3-pmi8994-mtp.dtb \
+	apq8096-v3-pmi8994-pmk8001-cdp.dtb \
+	apq8096-v3-pmi8994-pm8004-cdp.dtb \
+	apq8096-v3-pmi8994-pm8004-pmk8001-cdp.dtb \
+	apq8096-v3-pmi8996-cdp.dtb \
+	apq8096-v3-pmi8996-mtp.dtb \
+	apq8096-v3-liquid.dtb \
+	apq8096-v3-dragonboard.dtb \
+	apq8096-v3-sbc.dtb \
+	apq8096-v3-auto-dragonboard.dtb \
+	apq8096-v3-auto-adp.dtb \
+	apq8096-v3-auto-cdp.dtb \
+	apq8096-v3.0-pmi8994-cdp.dtb \
+	apq8096-v3.0-pmi8994-mtp.dtb \
+	apq8096-v3.0-pmi8994-pm8004-cdp.dtb \
+	apq8096-v3.0-pmi8994-pm8004-pmk8001-cdp.dtb \
+	apq8096-v3.0-pmi8994-pmk8001-cdp.dtb \
+	apq8096-v3.0-pmi8996-cdp.dtb \
+	apq8096-v3.0-pmi8996-mtp.dtb \
+	apq8096-v3.0-liquid.dtb \
+	apq8096-v3.0-dragonboard.dtb \
+	apq8096-v3-pmi8994-mdm9x55-i2s-cdp.dtb \
+	apq8096-v3-pmi8994-pm8004-mdm9x55-i2s-cdp.dtb \
+	apq8096-v3-pmi8994-pm8004-pmk8001-mdm9x55-i2s-cdp.dtb \
+	apq8096-v3-pmi8994-pmk8001-mdm9x55-i2s-cdp.dtb \
+	apq8096-v3-pmi8996-mdm9x55-i2s-cdp.dtb \
+	apq8096-v3-pmi8994-mdm9x55-i2s-mtp.dtb \
+	apq8096-v3-pmi8994-mdm9x55-slimbus-mtp.dtb \
+	apq8096-v3-pmi8996-mdm9x55-i2s-mtp.dtb \
+	apq8096-v3-pmi8996-mdm9x55-slimbus-mtp.dtb \
+	apq8096-v3-pmi8996-dragonboard.dtb \
+	msm8996-auto-mizar.dtb
+
+dtb-$(CONFIG_MSM_GVM_QUIN) += vplatform-lfv-msm8996-telematics.dtb \
+	vplatform-lfv-msm8996-ivi.dtb \
+	vplatform-lfv-msm8996-ivi_8GB.dtb \
+	vplatform-lfv-msm8996-baseline.dtb \
+	vplatform-lfv-msm8996-ivi-la.dtb \
+	vplatform-lfv-msm8996-ivi-la-recovery.dtb \
+	vplatform-lfv-msm8996-ivi-lv-mt.dtb
+
+ifeq ($(CONFIG_BUILD_ARM64_DT_OVERLAY),y)
+dtbo-$(CONFIG_ARCH_MSM8998) += \
+	msm8998-cdp-overlay.dtbo \
+	msm8998-mtp-overlay.dtbo \
+	msm8998-v2-cdp-overlay.dtbo \
+	msm8998-v2-mtp-overlay.dtbo \
+	msm8998-v2.1-cdp-overlay.dtbo \
+	msm8998-v2.1-mtp-overlay.dtbo \
+	msm8998-qrd-overlay.dtbo \
+	msm8998-qrd-vr1-overlay.dtbo \
+	msm8998-qrd-skuk-overlay.dtbo
+
+msm8998-cdp-overlay.dtbo-base :=  msm8998.dtb
+msm8998-mtp-overlay.dtbo-base :=  msm8998.dtb
+msm8998-v2-cdp-overlay.dtbo-base :=  msm8998-v2.dtb
+msm8998-v2-mtp-overlay.dtbo-base :=  msm8998-v2.dtb
+msm8998-v2.1-cdp-overlay.dtbo-base :=  msm8998-v2.1.dtb
+msm8998-v2.1-mtp-overlay.dtbo-base :=  msm8998-v2.1.dtb
+msm8998-qrd-overlay.dtbo-base :=  msm8998-qrd.dtb
+msm8998-qrd-vr1-overlay.dtbo-base :=  msm8998-qrd-vr1.dtb
+msm8998-qrd-skuk-overlay.dtbo-base :=  msm8998-qrd-skuk.dtb
+endif
+
+dtb-$(CONFIG_ARCH_MSMHAMSTER) += msmhamster-rumi.dtb
+
+dtb-$(CONFIG_ARCH_SDM660) += sdm660-sim.dtb \
+	sdm660-internal-codec-cdp.dtb \
+	sdm660-internal-codec-mtp.dtb \
+	sdm660-internal-codec-rcm.dtb \
+	sdm660-cdp.dtb \
+	sdm660-mtp.dtb \
+	sdm660-qrd.dtb \
+	sdm660-rcm.dtb \
+	sdm660-rumi.dtb \
+	sdm660-pm660a-cdp.dtb \
+	sdm660-pm660a-mtp.dtb \
+	sdm660-pm660a-qrd.dtb \
+	sdm660-pm660a-rcm.dtb \
+	sdm660-pm660a-rumi.dtb \
+	sdm660-internal-codec-pm660a-cdp.dtb \
+	sdm660-internal-codec-pm660a-mtp.dtb \
+	sdm660-internal-codec-pm660a-rcm.dtb \
+	sdm660-pm660a-sim.dtb \
+	sda660-cdp.dtb \
+	sda660-mtp.dtb \
+	sda660-rcm.dtb \
+	sda660-pm660a-cdp.dtb \
+	sda660-pm660a-mtp.dtb \
+	sda660-pm660a-rcm.dtb \
+	sda660-pm660a-qrd-hdk.dtb \
+	sdm660-headset-jacktype-no-cdp.dtb \
+	sdm660-headset-jacktype-no-rcm.dtb \
+	sdm660-pm660a-headset-jacktype-no-cdp.dtb \
+	sdm660-pm660a-headset-jacktype-no-rcm.dtb \
+	sdm660-usbc-audio-mtp.dtb \
+	sdm660-usbc-audio-rcm.dtb \
+	sdm658-mtp.dtb \
+	sdm658-cdp.dtb \
+	sdm658-rcm.dtb \
+	sdm658-qrd.dtb \
+	sdm658-pm660a-mtp.dtb \
+	sdm658-pm660a-cdp.dtb \
+	sdm658-pm660a-rcm.dtb \
+	sdm658-pm660a-qrd.dtb \
+	sdm658-internal-codec-mtp.dtb \
+	sdm658-internal-codec-cdp.dtb \
+	sdm658-internal-codec-rcm.dtb \
+	sdm658-internal-codec-pm660a-mtp.dtb \
+	sdm658-internal-codec-pm660a-cdp.dtb \
+	sdm658-internal-codec-pm660a-rcm.dtb \
+	sda658-cdp.dtb \
+	sda658-mtp.dtb \
+	sda658-rcm.dtb \
+	sda658-pm660a-mtp.dtb \
+	sda658-pm660a-cdp.dtb \
+	sda658-pm660a-rcm.dtb \
+	sdm636-cdp.dtb \
+	sdm636-mtp.dtb \
+	sdm636-qrd.dtb \
+	sdm636-rcm.dtb \
+	sdm636-headset-jacktype-no-cdp.dtb \
+	sdm636-headset-jacktype-no-rcm.dtb \
+	sdm636-internal-codec-cdp.dtb \
+	sdm636-internal-codec-mtp.dtb \
+	sdm636-internal-codec-pm660a-cdp.dtb \
+	sdm636-internal-codec-pm660a-mtp.dtb \
+	sdm636-internal-codec-pm660a-rcm.dtb \
+	sdm636-internal-codec-rcm.dtb \
+	sdm636-pm660a-headset-jacktype-no-cdp.dtb \
+	sdm636-pm660a-headset-jacktype-no-rcm.dtb \
+	sdm636-pm660a-cdp.dtb \
+	sdm636-pm660a-mtp.dtb \
+	sdm636-pm660a-qrd.dtb \
+	sdm636-pm660a-rcm.dtb \
+	sdm636-usbc-audio-mtp.dtb \
+	sdm636-usbc-audio-rcm.dtb \
+	sda636-cdp.dtb \
+	sda636-mtp.dtb \
+	sda636-rcm.dtb \
+	sda636-pm660a-cdp.dtb \
+	sda636-pm660a-mtp.dtb \
+	sda636-pm660a-qrd-hdk.dtb \
+	sda658-pm660a-rcm.dtb
+
+dtb-$(CONFIG_ARCH_SDM630) += sdm630-rumi.dtb \
+	sdm630-pm660a-rumi.dtb \
+	sdm630-mtp.dtb \
+	sdm630-usbc-audio-mtp.dtb \
+	sdm630-usbc-audio-rcm.dtb \
+	sdm630-cdp.dtb \
+	sdm630-rcm.dtb \
+	sdm630-internal-codec-mtp.dtb \
+	sdm630-internal-codec-cdp.dtb \
+	sdm630-internal-codec-rcm.dtb \
+	sdm630-pm660a-cdp.dtb \
+	sdm630-pm660a-mtp.dtb \
+	sdm630-pm660a-rcm.dtb \
+	sdm630-pm660a-qrd.dtb \
+	sdm630-internal-codec-pm660a-cdp.dtb \
+	sdm630-internal-codec-pm660a-mtp.dtb \
+	sdm630-internal-codec-pm660a-rcm.dtb \
+	sda630-mtp.dtb \
+	sda630-cdp.dtb \
+	sda630-rcm.dtb \
+	sda630-pm660a-mtp.dtb \
+	sda630-pm660a-cdp.dtb \
+	sda630-pm660a-rcm.dtb \
+	sda630-pm660a-qrd-hdk.dtb \
+	sdm630-headset-jacktype-no-cdp.dtb \
+	sdm630-headset-jacktype-no-rcm.dtb \
+	sdm630-pm660a-headset-jacktype-no-cdp.dtb \
+	sdm630-pm660a-headset-jacktype-no-rcm.dtb \
+	sdm455-mtp.dtb \
+	sdm455-qrd.dtb \
+	sdm455-cdp.dtb \
+	sdm455-rcm.dtb \
+	sdm455-internal-codec-rcm.dtb
+endif # CONFIG_MMI_DEVICE_DTBS
+
 ifeq ($(CONFIG_ARM64),y)
-dtb-$(CONFIG_ARCH_QCS405) += qcs405-rumi.dtb \
-		qcs405-iot-sku1.dtb \
-		qcs405-iot-sku2.dtb \
-		qcs405-iot-sku3.dtb \
-		qcs405-iot-sku4.dtb \
-		qcs405-iot-sku5.dtb \
-		qcs405-iot-sku6.dtb \
-		qcs405-iot-sku7.dtb \
-		qcs405-iot-sku8.dtb \
-		qcs405-iot-sku9.dtb \
-		qcs405-iot-sku10.dtb \
-		qcs405-iot-sku11.dtb \
-		qcs405-iot-sku12.dtb \
-		qcs401-iot-sku1.dtb
-else
-dtb-$(CONFIG_ARCH_QCS405) += qcs403-iot-sku1.dtb \
-			qcs403-iot-sku2.dtb \
-			qcs403-iot-sku3.dtb \
-			qcs403-iot-sku4.dtb
-endif
-
-ifeq ($(CONFIG_BUILD_ARM64_DT_OVERLAY),y)
-	dtbo-$(CONFIG_ARCH_SM8150) += \
-		sm8150-cdp-overlay.dtbo \
-		sm8150-mtp-overlay.dtbo \
-		sm8150-rumi-overlay.dtbo \
-		sm8150-qrd-overlay.dtbo \
-		sm8150-qrd-dvt-overlay.dtbo \
-		sa8155-adp-star-overlay.dtbo \
-		sa8155p-adp-star-overlay.dtbo \
-		sa8155-v2-adp-air-overlay.dtbo \
-                sa8155p-v2-adp-air-overlay.dtbo \
-		sa8155-adp-alcor-overlay.dtbo \
-		sa8155p-adp-alcor-overlay.dtbo \
-		sm8150-sdx50m-cdp-overlay.dtbo \
-		sm8150-sdx50m-mtp-overlay.dtbo \
-		sm8150-sdx50m-mtp-2.5k-panel-overlay.dtbo \
-		sm8150-sdx50m-qrd-overlay.dtbo \
-		sm8150-sdxprairie-cdp-overlay.dtbo \
-		sm8150-sdxprairie-mtp-overlay.dtbo \
-		sm8150-hdk-overlay.dtbo
-
-sm8150-cdp-overlay.dtbo-base := sm8150.dtb sm8150-v2.dtb sm8150p.dtb sm8150p-v2.dtb
-sm8150-mtp-overlay.dtbo-base := sm8150.dtb sm8150-v2.dtb sm8150p.dtb sm8150p-v2.dtb
-sm8150-rumi-overlay.dtbo-base := sm8150.dtb sm8150-v2.dtb sm8150p.dtb sm8150p-v2.dtb
-sm8150-qrd-overlay.dtbo-base := sm8150.dtb sm8150-v2.dtb sm8150p.dtb sm8150p-v2.dtb
-sm8150-hdk-overlay.dtbo-base := sm8150.dtb sm8150-v2.dtb sm8150p.dtb sm8150p-v2.dtb
-sm8150-qrd-dvt-overlay.dtbo-base := sm8150-v2.dtb sm8150p-v2.dtb
-sa8155-adp-star-overlay.dtbo-base := sa8155.dtb sa8155-v2.dtb
-sa8155p-adp-star-overlay.dtbo-base := sa8155p.dtb sa8155p-v2.dtb
-sa8155-v2-adp-air-overlay.dtbo-base := sa8155.dtb sa8155-v2.dtb
-sa8155p-v2-adp-air-overlay.dtbo-base := sa8155p.dtb sa8155p-v2.dtb
-sa8155-adp-alcor-overlay.dtbo-base := sa8155.dtb sa8155-v2.dtb
-sa8155p-adp-alcor-overlay.dtbo-base := sa8155p.dtb sa8155p-v2.dtb
-sm8150-sdx50m-cdp-overlay.dtbo-base := sm8150.dtb sm8150-v2.dtb sm8150p.dtb sm8150p-v2.dtb
-sm8150-sdx50m-mtp-overlay.dtbo-base := sm8150.dtb sm8150-v2.dtb sm8150p.dtb sm8150p-v2.dtb
-sm8150-sdx50m-mtp-2.5k-panel-overlay.dtbo-base := sm8150.dtb sm8150-v2.dtb sm8150p.dtb sm8150p-v2.dtb
-sm8150-sdx50m-qrd-overlay.dtbo-base := sm8150.dtb sm8150-v2.dtb sm8150p.dtb sm8150p-v2.dtb
-sm8150-sdxprairie-cdp-overlay.dtbo-base := sm8150.dtb sm8150-v2.dtb sm8150p.dtb sm8150p-v2.dtb
-sm8150-sdxprairie-mtp-overlay.dtbo-base := sm8150.dtb sm8150-v2.dtb sm8150p.dtb sm8150p-v2.dtb
-else
-dtb-$(CONFIG_ARCH_SM8150)	+= sm8150-rumi.dtb \
-	sm8150-mtp.dtb \
-	sm8150-cdp.dtb \
-	sm8150-qrd.dtb \
-	sa8155-adp-star.dtb \
-	sa8155p-adp-star.dtb \
-	sa8155-v2-adp-star.dtb \
-	sa8155p-v2-adp-star.dtb \
-	sa8155-v2-adp-air.dtb \
-	sa8155p-v2-adp-air.dtb \
-	sa8155-adp-alcor.dtb \
-	sa8155p-adp-alcor.dtb \
-	sm8150-v2-rumi.dtb \
-	sm8150-v2-mtp.dtb \
-	sm8150-v2-cdp.dtb \
-	sm8150-v2-qrd.dtb \
-	sm8150-v2-qrd-dvt.dtb \
-	sm8150p-mtp.dtb \
-	sm8150p-cdp.dtb \
-	sm8150p-qrd.dtb \
-	sm8150p-v2-mtp.dtb \
-	sm8150p-v2-cdp.dtb \
-	sm8150p-v2-qrd.dtb \
-	sm8150-hdk.dtb \
-	sm8150p-hdk.dtb
-endif
-
-dtb-$(CONFIG_QTI_GVM) += sa8155-vm.dtb \
-	sa6155p-vm.dtb
-
-ifeq ($(CONFIG_BUILD_ARM64_DT_OVERLAY),y)
-	dtbo-$(CONFIG_ARCH_SDMSHRIKE) += \
-		sdmshrike-cdp-overlay.dtbo \
-		sdmshrike-mtp-overlay.dtbo
-
-sdmshrike-cdp-overlay.dtbo-base := sdmshrike.dtb
-sdmshrike-mtp-overlay.dtbo-base := sdmshrike.dtb
-else
-dtb-$(CONFIG_ARCH_SDMSHRIKE)	+= sdmshrike-rumi.dtb \
-	sdmshrike-mtp.dtb \
-	sdmshrike-cdp.dtb
-endif
-
-ifeq ($(CONFIG_BUILD_ARM64_DT_OVERLAY),y)
-	dtbo-$(CONFIG_ARCH_SM6150) += \
-		sm6150-rumi-overlay.dtbo \
-		sm6150-qrd-overlay.dtbo \
-		sm6150-idp-overlay.dtbo \
-		sm6150p-qrd-overlay.dtbo \
-		sm6150p-idp-overlay.dtbo \
-		sm6150-external-codec-idp-overlay.dtbo \
-		sm6150-usbc-idp-overlay.dtbo \
-		sm6150-usbc-minidp-idp-overlay.dtbo \
-		sm6150-cmd-mode-display-idp-overlay.dtbo \
-		sa6155-adp-star-overlay.dtbo \
-		sa6155p-adp-star-overlay.dtbo \
-		sa6155-adp-air-overlay.dtbo \
-		sa6155p-adp-air-overlay.dtbo \
-		sa6155p-v2-adp-star-overlay.dtbo \
-		sa6155p-v2-adp-air-overlay.dtbo
-
-sm6150-rumi-overlay.dtbo-base := sm6150.dtb
-sm6150-qrd-overlay.dtbo-base := sm6150.dtb
-sm6150-idp-overlay.dtbo-base := sm6150.dtb
-sm6150p-qrd-overlay.dtbo-base := sm6150p.dtb
-sm6150p-idp-overlay.dtbo-base := sm6150p.dtb
-sm6150-external-codec-idp-overlay.dtbo-base := sm6150.dtb
-sm6150-usbc-idp-overlay.dtbo-base := sm6150.dtb
-sm6150-usbc-minidp-idp-overlay.dtbo-base := sm6150.dtb
-sm6150-cmd-mode-display-idp-overlay.dtbo-base := sm6150.dtb
-sa6155-adp-star-overlay.dtbo-base := sa6155.dtb
-sa6155p-adp-star-overlay.dtbo-base := sa6155p.dtb
-sa6155p-v2-adp-star-overlay.dtbo-base := sa6155p.dtb
-sa6155-adp-air-overlay.dtbo-base := sa6155.dtb
-sa6155p-adp-air-overlay.dtbo-base := sa6155p.dtb
-sa6155p-v2-adp-air-overlay.dtbo-base := sa6155p.dtb
-else
-dtb-$(CONFIG_ARCH_SM6150)	+= sm6150-rumi.dtb \
-	sm6150-qrd.dtb \
-	sm6150-idp.dtb \
-	sm6150p-qrd.dtb \
-	sm6150p-idp.dtb \
-	sm6150-external-codec-idp.dtb \
-	sm6150-usbc-idp.dtb \
-	sm6150-usbc-minidp-idp.dtb \
-	sm6150-cmd-mode-display-idp.dtb \
-	sa6155-adp-star.dtb \
-	sa6155p-adp-star.dtb \
-	sa6155-adp-air.dtb \
-	sa6155p-adp-air.dtb \
-	sa6155p-v2-adp-star.dtb \
-	sa6155p-v2-adp-air.dtb
-
-endif
-
-ifeq ($(CONFIG_BUILD_ARM64_DT_OVERLAY),y)
-	dtbo-$(CONFIG_ARCH_SDMMAGPIE) += \
-		sdmmagpie-idp-overlay.dtbo \
-		sdmmagpie-atp-overlay.dtbo \
-		sdmmagpie-rumi-overlay.dtbo \
-		sdmmagpie-qrd-overlay.dtbo \
-		sdmmagpiep-idp-overlay.dtbo \
-		sdmmagpiep-atp-overlay.dtbo \
-		sdmmagpiep-qrd-overlay.dtbo \
-		sdmmagpie-external-codec-idp-overlay.dtbo \
-		sdmmagpie-usbc-idp-overlay.dtbo \
-		sdmmagpie-dual-display-idp-overlay.dtbo
-
-sdmmagpie-idp-overlay.dtbo-base := sdmmagpie.dtb
-sdmmagpie-atp-overlay.dtbo-base := sdmmagpie.dtb
-sdmmagpie-rumi-overlay.dtbo-base := sdmmagpie.dtb
-sdmmagpie-qrd-overlay.dtbo-base := sdmmagpie.dtb
-sdmmagpiep-idp-overlay.dtbo-base := sdmmagpiep.dtb
-sdmmagpiep-atp-overlay.dtbo-base := sdmmagpiep.dtb
-sdmmagpiep-qrd-overlay.dtbo-base := sdmmagpiep.dtb
-sdmmagpie-external-codec-idp-overlay.dtbo-base := sdmmagpie.dtb
-sdmmagpie-usbc-idp-overlay.dtbo-base := sdmmagpie.dtb
-sdmmagpie-dual-display-idp-overlay.dtbo-base := sdmmagpie.dtb
-else
-dtb-$(CONFIG_ARCH_SDMMAGPIE)	+= sdmmagpie-rumi.dtb \
-	sdmmagpie-idp.dtb \
-	sdmmagpie-atp.dtb \
-	sdmmagpie-qrd.dtb \
-	sdmmagpiep-idp.dtb \
-	sdmmagpiep-atp.dtb \
-	sdmmagpiep-qrd.dtb \
-	sdmmagpie-external-codec-idp.dtb \
-	sdmmagpie-usbc-idp.dtb \
-	sdmmagpie-dual-display-idp.dtb
-endif
-
-ifeq ($(CONFIG_BUILD_ARM64_DT_OVERLAY),y)
-	dtbo-$(CONFIG_ARCH_TRINKET) += \
-		trinket-rumi-overlay.dtbo \
-		trinket-idp-overlay.dtbo \
-		trinket-qrd-overlay.dtbo \
-		trinket-external-codec-idp-overlay.dtbo \
-		trinket-usbc-external-codec-idp-overlay.dtbo \
-		trinket-usbc-idp-overlay.dtbo \
-		trinket-dp-idp-overlay.dtbo
-
-trinket-rumi-overlay.dtbo-base := trinket.dtb
-trinket-idp-overlay.dtbo-base := trinket.dtb
-trinket-qrd-overlay.dtbo-base := trinket.dtb
-trinket-external-codec-idp-overlay.dtbo-base := trinket.dtb
-trinket-usbc-external-codec-idp-overlay.dtbo-base := trinket.dtb
-trinket-usbc-idp-overlay.dtbo-base := trinket.dtb
-trinket-dp-idp-overlay.dtbo-base := trinket.dtb
-else
-dtb-$(CONFIG_ARCH_TRINKET)	+= trinket-rumi.dtb \
-	trinket-idp.dtb \
-	trinket-qrd.dtb \
-	trinket-external-codec-idp.dtb \
-	trinket-usbc-external-codec-idp.dtb \
-	trinket-usbc-idp.dtb \
-	trinket-dp-idp.dtb
-endif
-
-dtb-$(CONFIG_ARCH_SDXPRAIRIE) += sdxprairie-rumi.dtb \
-	sdxprairie-cdp.dtb \
-	sdxprairie-mtp.dtb \
-	sdxprairie-pcie-ep-mtp.dtb \
-	sdxprairie-cdp-256.dtb \
-	sdxprairie-mtp-256.dtb \
-	sdxprairie-mtp-aqc.dtb
-
-ifeq ($(CONFIG_ARM64),y)
-always		:= $(dtb-y)
-subdir-y	:= $(dts-dirs)
+always          := $(dtb-y)
+always          += $(dtbo-y)
+subdir-y        := $(dts-dirs)
 else
 targets += dtbs
 targets += $(addprefix ../, $(dtb-y))
@@ -246,4 +359,4 @@ $(obj)/../%.dtb: $(src)/%.dts FORCE
 
 dtbs: $(addprefix $(obj)/../,$(dtb-y))
 endif
-clean-files	:= *.dtb *.dtbo
+clean-files := *.dtbo *.dtb
