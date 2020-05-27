@@ -111,12 +111,10 @@ config QCOM_SDXPRAIRIE_LLCC
 	  data required to configure LLCC so that clients can start using the
 	  LLCC slices.
 
-<<<<<<< HEAD
-
 config QCOM_LLCC_AMON
 	tristate "Qualcomm Technologies, Inc. LLCC Activity Monitor(AMON) driver"
 	depends on QCOM_LLCC
-=======
+
 config MSM_SMEM_LOGGING
 	depends on MSM_SMEM
 	bool "MSM Shared Memory Logger"
